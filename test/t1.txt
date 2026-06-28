@@ -1,1 +1,1 @@
-let x:int = 10 in x + 3
+let x:int = 10 in {x + 3}

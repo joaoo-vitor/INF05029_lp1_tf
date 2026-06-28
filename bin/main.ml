@@ -1,8 +1,10 @@
 (* main.ml *)
 
+open Lp1_tf
 open Lexer (* nome do módulo no arquivo lexer.ml *)
 open Parser (* nome do módulo no arquivo parser.ml *)
 open Ast
+open TypeInfer
 
 (* Função para criar string legível da AST (exemplo básico) *)
 let rec string_of_typ = function
@@ -53,25 +55,6 @@ let rec string_of_expr = function
       Printf.sprintf "Sentence(%s , %s)" (string_of_expr e1) (string_of_expr e2)
   | Address -> 
       Printf.sprintf "Address"
-
-
-(* let parse_file filename =
-  let ic = open_in filename in
-  let lexbuf = Lexing.from_channel ic in
-  try
-    let ast = Parser.main Lexer.tokenize lexbuf in
-    close_in ic;
-    Ok ast
-  with
-  | Lexer.Lexing_error msg ->
-      close_in ic;
-      Error ("Lexing error: " ^ msg)
-  | Parser.Error ->
-      close_in ic;
-      let pos = lexbuf.Lexing.lex_curr_p in
-      Error (Printf.sprintf "Syntax error at line %d, column %d"
-               pos.Lexing.pos_lnum (pos.Lexing.pos_cnum - pos.Lexing.pos_bol))
-*)
 
 (* Faz parsing the conteúdo de arquivo e retorna AST ou msg de erro  *) 
 let parse_file filename =
@@ -132,12 +115,16 @@ let () =
   end;
 
   let filename = Sys.argv.(1) in
-
-  (* Tenta fazer o parse do arquivo *)  
-  match parse_file filename with
-  | Ok ast ->
+    (* Tenta fazer o parse do arquivo *)  
+    let ast = (match parse_file filename with
+    | Ok ast ->
+        ast
+    | Error msg ->
+        prerr_endline msg;
+        exit 1)
+    in
       print_endline "Árvore de Sintaxe Abstrata:";
-      print_endline (string_of_expr ast)
-  | Error msg ->
-      prerr_endline msg;
-      exit 1
+      print_endline (string_of_expr ast);
+      let t1 = type_of [] ast in
+        print_endline "Tipo inferido:";
+        print_endline (string_of_typ t1);

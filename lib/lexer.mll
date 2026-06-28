@@ -2,10 +2,11 @@
 open Parser  (* módulo gerado pelo Menhir *)
 exception Lexing_error of string
 }
+let newline = '\r' | '\n' | "\r\n" 
 
 rule tokenize = parse
-  | [' ' '\t' '\r' '\n'] { tokenize lexbuf }  
-  | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID lxm }
+  | [' ' '\t']           { tokenize lexbuf }  
+  | newline              { Lexing.new_line lexbuf; tokenize lexbuf}
   | ['0'-'9']+ as lxm    { INT (int_of_string lxm) }
   | "true"               { TRUE }
   | "false"              { FALSE }
@@ -37,5 +38,6 @@ rule tokenize = parse
   | ':'                  { COLON }
   | ';'                  { SEMICOLON }
   | "new"                { NEW }
+  | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID lxm }
   | eof                  { EOF }
   | _ as c               { raise (Lexing_error (Printf.sprintf "Unexpected character: %c" c)) }

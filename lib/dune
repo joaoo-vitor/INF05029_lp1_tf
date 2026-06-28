@@ -1,2 +1,5 @@
 (library
  (name lp1_tf))
+(ocamllex lexer)
+ (menhir
+  (modules parser))

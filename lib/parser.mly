@@ -17,7 +17,7 @@ open Ast
 
 
 
-%nonassoc IN ELSE
+%nonassoc IN ELSE SEMICOLON
 %left OR
 %left AND
 %left EQ LT GT 
@@ -39,7 +39,7 @@ expr:
 | TRUE                        { Bool true }
 | FALSE                       { Bool false }
 | ID                          { Id $1 }
-| IF expr THEN  LBRACE expr RBRACE ELSE LBRACE expr RBRACE { If ($2, $5, $9) }
+| IF expr THEN LBRACE expr RBRACE ELSE LBRACE expr RBRACE { If ($2, $5, $9) }
 | LET ID COLON typ EQ expr IN LBRACE expr RBRACE
                               { Let ($2, $4, $6, $9) }
 | expr PLUS expr               { Binop (Plus, $1, $3) }
@@ -57,6 +57,7 @@ expr:
 | EXCL expr                 { ValueAt($2) }
 | NEW expr                  { Alloc($2) }  
 | expr SEMICOLON expr       { Sentence($1, $3)}
+| ID COLON EQ expr       { Atrib($1, $4)}
 
 typ:
   INT_TYPE                   { TInt }

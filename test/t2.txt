@@ -1,1 +1,2 @@
-(let x:int = 10 in x) + 20 
+(let x:int = 10 in 
+{x}) +10

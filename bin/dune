@@ -2,6 +2,3 @@
  (public_name lp1_tf)
  (name main)
  (libraries lp1_tf))
-(ocamllex lexer)
-(menhir
- (modules parser))
