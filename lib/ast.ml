@@ -24,6 +24,6 @@ type expr =
   | Binop of bop * expr * expr
   | Sentence of expr * expr (* e1;e2 *)
   | Empty (* () *)
-  | Address (* l *)
+  | Address of int(* l *)
 
   

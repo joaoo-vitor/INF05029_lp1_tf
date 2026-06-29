@@ -53,8 +53,8 @@ let rec string_of_expr = function
       Printf.sprintf "While(%s , %s)" (string_of_expr e1) (string_of_expr e2)
   | Sentence(e1,e2) -> 
       Printf.sprintf "Sentence(%s , %s)" (string_of_expr e1) (string_of_expr e2)
-  | Address -> 
-      Printf.sprintf "Address"
+  | Address l -> 
+      Printf.sprintf "Address %s" (string_of_int l)
 
 (* Faz parsing the conteúdo de arquivo e retorna AST ou msg de erro  *) 
 let parse_file filename =

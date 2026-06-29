@@ -49,8 +49,15 @@ Leia a estrutura de arquivos para saber o que cada um faz.
 
 
 ### Como rodar o trabalho
-A main roda um teste específico a partir do que for dado como entrada.
+- Rodando todas as etapas
+A main roda um teste específico a partir do que for dado como entrada. O arquivo de entrada deve ser um .txt com o código a ser interpretado.
 Rodando um teste específico:
 ```bash
-dune exec lp1_tfs
+dune exec lp1_tfs <caminho_arquivo_txt>
+```
+
+- Rodando apenas o scanner 
+Se você quiser ver quais tokens serão gerados para um teste (arquivo .txt), basta fazer assim:
+```bash
+dune exec test/testScanner.exe <caminho_arquivo_txt>
 ```

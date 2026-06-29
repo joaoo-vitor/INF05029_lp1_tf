@@ -64,7 +64,7 @@ match e with
         if type_of g e1 = TUnit then
             type_of g e2
         else raise(TypeError "na expressão Sentence(e1, e2), o tipo de e1 deve ser Unit")
-    | Address ->
+    | Address _ ->
         raise(TypeError "type_infer recebeu um endereço, mas não pois é um valor gerado pelo interpretador")
     | Empty -> TUnit
    

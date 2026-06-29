@@ -17,12 +17,15 @@ open Ast
 
 
 
-%nonassoc IN ELSE SEMICOLON
+%left SEMICOLON (* x: 5 + 3; !x significa (x:= (5+3)); (!x)*)
+%right ASSIGN  (* x := y := 5 significa x:= (y:=5) *)
 %left OR
 %left AND
 %left EQ LT GT 
 %left PLUS MINUS
 %left TIMES DIV
+%nonassoc EXCL   (* nonassoc pq é unario, n faz sentido associatividade*)
+%nonassoc NEW   
 
 %start <expr> main
 %type  <expr> expr 

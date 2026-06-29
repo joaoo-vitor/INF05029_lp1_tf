@@ -1,0 +1,4 @@
+let x : ref int = new(1)in{
+    x:=10;
+    if(!x>0)then {true} else {false}
+}
