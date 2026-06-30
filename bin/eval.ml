@@ -69,22 +69,22 @@ let rec step (e: expr) (m: storable_value array) : expr * (storable_value array)
     (Let(x,t,e1',e2), m')
 
   | Atrib(e1, v) when is_value v ->  (* regras ATR *)
-    match e1 with
+    (match e1 with
     | Address l ->
       m.(l) <- storableValue_of_value v;
       (Empty, m)
-    | _ -> raise NoRuleApplies
+    | _ -> raise NoRuleApplies)
     
   | Atrib(e0,e1) ->  (* e0 tem que ser um id, parser obriga isso*)
     let (e1',m') = step e1 m in
     (Atrib(e0,e1'),m')
 
   | ValueAt(v) when is_value v ->  (* regras DEREF *)
-      match v with
+      (match v with
       | Address l -> 
         let sv = m.(l) in
         (value_of_storableValue sv, m) (* rotina para pegar a ast do valor na memoria *)
-      | _ -> raise NoRuleApplies
+      | _ -> raise NoRuleApplies)
   | ValueAt e1 ->
     let (e1', m) = step e1 m in
     (ValueAt e1', m)
@@ -108,7 +108,7 @@ let rec step (e: expr) (m: storable_value array) : expr * (storable_value array)
 let rec eval_expr e m =
   try
     let (e', m') = step e m  (* da loop até dar exceção (mapeada) e teste se é valor*)
-    in eval e' m'
+    in eval_expr e' m'
   with
     NoRuleApplies ->
       if is_value e then e else failwith "erro no typechecker ou no step"

@@ -43,7 +43,7 @@ let rec string_of_expr = function
   | Binop(op, e1, e2) ->
       Printf.sprintf "Binop(%s , %s , %s)" (string_of_bop op) (string_of_expr e1) (string_of_expr e2) 
   | Atrib(x, e) ->
-      Printf.sprintf "Atrib(%s , %s)" x (string_of_expr e)
+      Printf.sprintf "Atrib(%s , %s)" (string_of_expr x) (string_of_expr e)
   | ValueAt(e) -> 
       Printf.sprintf "ValueAt(%s)" (string_of_expr e)
   | Alloc(e) -> 

@@ -1,3 +1,8 @@
-let teste : ref bool = new true in
-{teste := false;
+let address: ref bool=  let teste : ref bool = new true in
+{teste := true;
 teste}
+
+in{
+
+!address
+}

@@ -1,0 +1,3 @@
+while true do {
+    let x : ref bool = new false in{x:=true}
+}
