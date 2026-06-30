@@ -5,6 +5,7 @@ open Lexer (* nome do módulo no arquivo lexer.ml *)
 open Parser (* nome do módulo no arquivo parser.ml *)
 open Ast
 open TypeInfer
+open Eval
 
 (* Função para criar string legível da AST (exemplo básico) *)
 let rec string_of_typ = function
@@ -128,3 +129,6 @@ let () =
       let t1 = type_of [] ast in
         print_endline "Tipo inferido:";
         print_endline (string_of_typ t1);
+      let result = eval ast in
+        print_endline "Resultado da Avaliação:";
+        print_endline (string_of_expr result);

@@ -4,7 +4,7 @@ exception TypeError of string
 
 type typenv = (string * typ) list (* list de ident e tipos*)
 let rec type_of (g: typenv) (e: expr): typ =
-match e with
+    match e with
     | Int n -> TInt
     | Bool b -> TBool
     | Id x ->
@@ -37,12 +37,16 @@ match e with
         if (type_of g e1) = typ then  (* certifica-se de que o tipo de e1 é o mesmo do tipo dado*)
             (type_of ((iden, typ)::g) e2)
         else raise (TypeError "e1 deve ser do tipo typ na expressão Let(iden, typ, e1, e2)")
-    | Atrib(x, e1) ->
-        let t1 = (try (* t1 é o tipo associado ao identificador x*)
+    | Atrib(e1, e2) ->
+        let x = (match e1 with 
+            | Id x -> x
+            | _ -> raise (TypeError "e1 deve ser do tipo identificador na expressão Atrib(e1, e2)"))
+        in
+        let t1 = (try (* t1 é o tipo associado ao identificador x*) 
             List.assoc x g
             with Not_found -> raise (TypeError ("identificador "^ x ^ "nao foi declarado")))  
         in
-        let t2 = type_of g e1 in 
+        let t2 = type_of g e2 in 
         if t1 = TRef(t2) then
             TUnit
         else
@@ -67,6 +71,6 @@ match e with
     | Address _ ->
         raise(TypeError "type_infer recebeu um endereço, mas não pois é um valor gerado pelo interpretador")
     | Empty -> TUnit
-   
+
 
 

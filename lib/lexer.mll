@@ -35,6 +35,7 @@ rule tokenize = parse
   | "!"                  { EXCL }
   | '('                  { LPAREN }
   | ')'                  { RPAREN }
+  | ":="                  { ASSIGN }
   | ':'                  { COLON }
   | ';'                  { SEMICOLON }
   | "new"                { NEW }

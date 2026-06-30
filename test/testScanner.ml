@@ -2,7 +2,8 @@ open Lp1_tf
 open Parser
 open Lexer
 
-let string_of_token = function
+let string_of_token token = (*função que converte token para string, sem precisar declarar o tipo token*)
+  match token with  
   | INT i      -> Printf.sprintf "INT(%d)" i
   | TRUE       -> "TRUE"
   | FALSE      -> "FALSE"
@@ -34,6 +35,7 @@ let string_of_token = function
   | RPAREN     -> "RPAREN"
   | COLON      -> "COLON"
   | SEMICOLON  -> "SEMICOLON"
+  | ASSIGN     -> "ASSIGN"
   | NEW        -> "NEW"
   | EOF        -> "EOF"
 
@@ -52,9 +54,7 @@ let test_scanner file_path =
   print_all_tokens lexbuf;
   close_in input_channel
 
-
 let () =
-  
   (* Verifica se o usuário forneceu um nome de arquivo *)
   if Array.length Sys.argv <> 2 then 
   begin
@@ -63,6 +63,5 @@ let () =
   end;
 
   let filename = Sys.argv.(1) in
-
   (* Tenta fazer o parse do arquivo *)  
   test_scanner filename

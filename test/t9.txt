@@ -1,4 +1,1 @@
-let x: int ref = new 5 in
-{
-    let y int ref 
-}
+x: =1

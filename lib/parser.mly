@@ -7,15 +7,13 @@ open Ast
 %token <string> ID
 %token IF THEN ELSE LET IN
 %token LBRACE RBRACE
-%token WHILE DO 
+%token WHILE DO
 %token INT_TYPE BOOL_TYPE UNIT_TYPE REF_TYPE
 %token PLUS MINUS TIMES DIV AND OR EQ LT GT
 %token EXCL
-%token LPAREN RPAREN COLON SEMICOLON 
+%token LPAREN RPAREN ASSIGN COLON SEMICOLON
 %token NEW
 %token EOF
-
-
 
 %left SEMICOLON (* x: 5 + 3; !x significa (x:= (5+3)); (!x)*)
 %right ASSIGN  (* x := y := 5 significa x:= (y:=5) *)
@@ -60,7 +58,7 @@ expr:
 | EXCL expr                 { ValueAt($2) }
 | NEW expr                  { Alloc($2) }  
 | expr SEMICOLON expr       { Sentence($1, $3)}
-| ID COLON EQ expr       { Atrib($1, $4)}
+| expr ASSIGN expr       { Atrib($1, $3)}
 
 typ:
   INT_TYPE                   { TInt }

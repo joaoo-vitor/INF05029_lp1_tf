@@ -20,7 +20,7 @@ type expr =
   | Alloc of expr (* new e *)
   | While of expr * expr
   | Let of string * typ * expr * expr
-  | Atrib of string * expr
+  | Atrib of expr * expr
   | Binop of bop * expr * expr
   | Sentence of expr * expr (* e1;e2 *)
   | Empty (* () *)
