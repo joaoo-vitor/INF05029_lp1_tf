@@ -1,0 +1,5 @@
+let x:ref int = new 1 in {
+ x:=2;
+ x:=3;
+ if !x=3 then{true} else{false}
+}
